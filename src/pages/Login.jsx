@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Banner from '../components/Banner';
+import DownloadNow from '../components/DownloadNow';
+import Groupwatch from '../components/Groupwatch';
 import Stream from '../components/Stream';
 
 const Login = () => {
@@ -11,6 +13,8 @@ const Login = () => {
             <Main>
                 <Banner />
                 <Stream />
+                <Groupwatch />
+                <DownloadNow />
             </Main>
         </>
     );
