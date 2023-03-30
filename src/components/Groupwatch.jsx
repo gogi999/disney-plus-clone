@@ -25,21 +25,18 @@ const Groupwatch = () => {
 
 const Section = styled.section`
     background: url(${GrpImg})center/cover no-repeat;
-    height: 71vh;
+    height: 88vh;
     display: flex;
     align-items: center;
     flex-direction: column;
-
     @media screen and (min-width: 768px) and (max-width: 1200px){
         height: 61vh;
     }
-
     @media screen and (min-width: 280px) and (max-width: 767px){
         height: 55vh;
         object-fit: contain;
     }
 `;
-
 const Container = styled.div`
     width: 91%;
     margin: 0 auto;
@@ -48,7 +45,6 @@ const Container = styled.div`
         width: 85%;
     }
 `;
-
 const Content = styled.div`
     margin-top: 17vh;
 
@@ -62,11 +58,11 @@ const Content = styled.div`
         @media screen and (min-width: 768px) and (max-width: 1200px){
             font-size: 1.2rem;
         }
-        
+
         @media screen and (min-width: 375px) and (max-width: 767px){
             font-size: 1rem;
         }
-
+        
         @media screen and (min-width: 280px) and (max-width: 375px){
             font-size: 0.7rem;
             font-weight: 400;
