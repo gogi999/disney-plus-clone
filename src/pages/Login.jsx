@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+import Advertise from '../components/Advertise';
 import Banner from '../components/Banner';
 import Devices from '../components/Devices';
 import DownloadNow from '../components/DownloadNow';
@@ -20,6 +21,7 @@ const Login = () => {
                 <MarvelStudio />
                 <GridTheme />
                 <DownloadNow />
+                <Advertise />
                 <Devices />
             </Main>
         </>
