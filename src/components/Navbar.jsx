@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import homeIcon from '../images/home-icon.svg';
 import logo from '../images/logo.svg';
-// import userPhoto from '../images/LUCA-2.png';
 import movieIcon from '../images/movie-icon.svg';
 import origIcon from '../images/original-icon.svg';
 import admin from '../images/profile_pic.jpg';
@@ -15,13 +14,19 @@ import shutdown from '../images/shutdown.svg';
 import watchIcon from '../images/watchlist-icon.svg';
 
 const Navbar = () => {
+    const [toggle, setToggle] = useState(false);
+
+    const handlePopupMenu = () => setToggle(!toggle);
+
     const signOut = () => {}
 
     return (
         <>
             <Nav>
                 <Navbrand>
-                    <img src={logo} alt="disney/logo" />
+                    <NavLink to="/">
+                        <img src={logo} alt="disney/logo" />
+                    </NavLink>
                 </Navbrand>
                 <NavMenu>
                     <NavLink className="nav-link" to="/home">
@@ -65,18 +70,23 @@ const Navbar = () => {
                         /> <span>SERIES</span>
                     </NavLink>
                 </NavMenu>
-                <UserImg onClick={()=> {}}>
+                <UserImg>
                     <img 
                         src={admin} 
                         alt="img/user" 
+                        onClick={handlePopupMenu}
                     />
                 </UserImg>                        
-                <SignOutBtn onClick={()=> {}}>
+                <PopupMenu activeState={toggle}>
                     <li>
                         <NavLink className="nav-link" to="/home">
                             <img 
                                 src={homeIcon} 
-                                alt={homeIcon} 
+                                alt={homeIcon}
+                                style={{
+                                    width: "0.8rem",
+                                    height: "0.8rem",
+                                }} 
                             /><span>HOME</span>
                         </NavLink>
                     </li>
@@ -85,10 +95,14 @@ const Navbar = () => {
                             <img 
                                 src={shutdown} 
                                 alt={homeIcon} 
+                                style={{
+                                    width: "0.8rem",
+                                    height: "0.8rem",
+                                }}
                             /><span>SignOut</span>
                         </NavLink>
                     </li>
-                </SignOutBtn>
+                </PopupMenu>
             </Nav>
         </>
     );
@@ -224,7 +238,7 @@ const UserImg = styled.div`
     }
 `;
 
-const SignOutBtn = styled.div`
+const PopupMenu = styled.div`
     top: 7vh;
     width: auto;
     height: auto;
@@ -239,27 +253,32 @@ const SignOutBtn = styled.div`
     background-color: #040714;
     border: 1.3px solid rgba(151, 151, 151, 1);
     box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
-    display: ${props => props.show ? 'flex' : 'none'};
+    display: ${(props) => props.activeState ? "flex" : "none"};
+
     @media screen and (min-width: 280px) and (max-width: 550px){
         top: 9vh;
         padding: 0.5rem;
     }
-    li{
+
+    li {
         width: 100%;
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
         border-bottom: 1.3px solid rgba(151, 151, 151, 1);
         margin: 0.5vh 0;
-        > .nav-link{
+
+        > .nav-link {
             @media screen and (min-width: 280px) and (max-width: 550px){
                 font-size: 0.8rem;
             }
-            img{
+
+            img {
                 margin: 0 0.5rem;
                 width: 0.9rem;
                 height: 0.8rem;
                 object-fit: cover;
+
                 @media screen and (min-width: 280px) and (max-width: 550px){
                     margin: 0 0.3rem;
                     width: 0.7rem;
