@@ -1,27 +1,85 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import {
+  useDispatch,
+  useSelector,
+} from 'react-redux';
+import {
+  NavLink,
+  useHistory,
+} from 'react-router-dom';
 import styled from 'styled-components';
 
+import {
+  auth,
+  provider,
+} from '../firebase';
 import homeIcon from '../images/home-icon.svg';
 import logo from '../images/logo.svg';
 import movieIcon from '../images/movie-icon.svg';
 import origIcon from '../images/original-icon.svg';
-import admin from '../images/profile_pic.jpg';
 import searchIcon from '../images/search-icon.svg';
 import seriesIcon from '../images/series-icon.svg';
 import shutdown from '../images/shutdown.svg';
 import watchIcon from '../images/watchlist-icon.svg';
-import { selectUserName } from '../redux/reducers/userReducer';
+import {
+  selectUserName,
+  selectUserPhoto,
+  setLoginState,
+  setLogoutState,
+} from '../redux/reducers/userReducer';
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const userName = useSelector(selectUserName);
+    const userPhoto = useSelector(selectUserPhoto);
     const [toggle, setToggle] = useState(false);
 
     const handlePopupMenu = () => setToggle(!toggle);
 
-    const signOut = () => {}
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                dispatch(setLoginState({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL
+                }));
+
+                history.push('/home'); 
+            }
+        })
+    }, [dispatch, history]);
+
+    const signIn = () => {
+        auth
+            .signInWithPopup(provider)
+            .then((response) => {
+                let user = response.user;
+                dispatch(setLoginState({
+                    name: user.displayName,
+                    email: user.email,
+                    photo: user.photoURL,
+                }));
+            });
+            
+        history.push('/home');
+    }
+
+    const signOut = () => {
+        auth
+            .signOut()
+            .then(() => {
+                dispatch(setLogoutState());
+                history.push('/'); 
+            });
+            
+        history.push('/home');
+    }
 
     return (
         <>
@@ -32,7 +90,9 @@ const Navbar = () => {
                     </NavLink>
                 </Navbrand>
                 {!userName ? (
-                    <LoginBtn>Login</LoginBtn>
+                    <LoginBtn onClick={signIn}>
+                        Login
+                    </LoginBtn>
                 ) : (
                     <>
                         <NavMenu>
@@ -79,7 +139,7 @@ const Navbar = () => {
                         </NavMenu>
                         <UserImg>
                             <img 
-                                src={admin} 
+                                src={userPhoto} 
                                 alt="img/user" 
                                 onClick={handlePopupMenu}
                             />
