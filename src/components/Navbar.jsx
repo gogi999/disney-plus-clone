@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,8 +13,10 @@ import searchIcon from '../images/search-icon.svg';
 import seriesIcon from '../images/series-icon.svg';
 import shutdown from '../images/shutdown.svg';
 import watchIcon from '../images/watchlist-icon.svg';
+import { selectUserName } from '../redux/reducers/userReducer';
 
 const Navbar = () => {
+    const userName = useSelector(selectUserName);
     const [toggle, setToggle] = useState(false);
 
     const handlePopupMenu = () => setToggle(!toggle);
@@ -28,81 +31,87 @@ const Navbar = () => {
                         <img src={logo} alt="disney/logo" />
                     </NavLink>
                 </Navbrand>
-                <NavMenu>
-                    <NavLink className="nav-link" to="/home">
-                        <img 
-                            style={{
-                                width: "0.8rem",
-                                height: "0.8rem",
-                                objectFit:"contain"
-                            }} 
-                            src={homeIcon} alt={homeIcon} 
-                        /><span>HOME</span>
-                    </NavLink>
-                    <NavLink className="nav-link" to="#">
-                        <img 
-                            src={searchIcon} 
-                            alt={searchIcon} 
-                        /><span>SEARCH</span>
-                    </NavLink>
-                    <NavLink className="nav-link" to="#">
-                        <img 
-                            src={watchIcon} 
-                            alt={watchIcon} 
-                        /><span>WATCHLIST</span>
-                    </NavLink>
-                    <NavLink className="nav-link" to="#">
-                        <img 
-                            src={origIcon} 
-                            alt={origIcon} 
-                        /><span>ORIGINALS</span>
-                    </NavLink>
-                    <NavLink className="nav-link" to="#">
-                        <img 
-                            src={movieIcon} 
-                            alt={movieIcon} 
-                        /><span>MOVIES</span>
-                    </NavLink>
-                    <NavLink className="nav-link" to="#">
-                        <img 
-                            src={seriesIcon} 
-                            alt={seriesIcon} 
-                        /> <span>SERIES</span>
-                    </NavLink>
-                </NavMenu>
-                <UserImg>
-                    <img 
-                        src={admin} 
-                        alt="img/user" 
-                        onClick={handlePopupMenu}
-                    />
-                </UserImg>                        
-                <PopupMenu activeState={toggle}>
-                    <li>
-                        <NavLink className="nav-link" to="/home">
+                {!userName ? (
+                    <LoginBtn>Login</LoginBtn>
+                ) : (
+                    <>
+                        <NavMenu>
+                            <NavLink className="nav-link" to="/home">
+                                <img 
+                                    style={{
+                                        width: "0.8rem",
+                                        height: "0.8rem",
+                                        objectFit:"contain"
+                                    }} 
+                                    src={homeIcon} alt={homeIcon} 
+                                /><span>HOME</span>
+                            </NavLink>
+                            <NavLink className="nav-link" to="#">
+                                <img 
+                                    src={searchIcon} 
+                                    alt={searchIcon} 
+                                /><span>SEARCH</span>
+                            </NavLink>
+                            <NavLink className="nav-link" to="#">
+                                <img 
+                                    src={watchIcon} 
+                                    alt={watchIcon} 
+                                /><span>WATCHLIST</span>
+                            </NavLink>
+                            <NavLink className="nav-link" to="#">
+                                <img 
+                                    src={origIcon} 
+                                    alt={origIcon} 
+                                /><span>ORIGINALS</span>
+                            </NavLink>
+                            <NavLink className="nav-link" to="#">
+                                <img 
+                                    src={movieIcon} 
+                                    alt={movieIcon} 
+                                /><span>MOVIES</span>
+                            </NavLink>
+                            <NavLink className="nav-link" to="#">
+                                <img 
+                                    src={seriesIcon} 
+                                    alt={seriesIcon} 
+                                /> <span>SERIES</span>
+                            </NavLink>
+                        </NavMenu>
+                        <UserImg>
                             <img 
-                                src={homeIcon} 
-                                alt={homeIcon}
-                                style={{
-                                    width: "0.8rem",
-                                    height: "0.8rem",
-                                }} 
-                            /><span>HOME</span>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink onClick={signOut} className="nav-link" to="/home">
-                            <img 
-                                src={shutdown} 
-                                alt={homeIcon} 
-                                style={{
-                                    width: "0.8rem",
-                                    height: "0.8rem",
-                                }}
-                            /><span>SignOut</span>
-                        </NavLink>
-                    </li>
-                </PopupMenu>
+                                src={admin} 
+                                alt="img/user" 
+                                onClick={handlePopupMenu}
+                            />
+                        </UserImg>                        
+                        <PopupMenu activeState={toggle}>
+                            <li>
+                                <NavLink className="nav-link" to="/home">
+                                    <img 
+                                        src={homeIcon} 
+                                        alt={homeIcon}
+                                        style={{
+                                            width: "0.8rem",
+                                            height: "0.8rem",
+                                        }} 
+                                    /><span>HOME</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink onClick={signOut} className="nav-link" to="/home">
+                                    <img 
+                                        src={shutdown} 
+                                        alt={homeIcon} 
+                                        style={{
+                                            width: "0.8rem",
+                                            height: "0.8rem",
+                                        }}
+                                    /><span>SignOut</span>
+                                </NavLink>
+                            </li>
+                        </PopupMenu>
+                    </>
+                )}
             </Nav>
         </>
     );

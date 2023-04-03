@@ -6,13 +6,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 
-import slide1 from '../images/slide1.jpg';
-import slide2 from '../images/slide2.jpg';
-import slide3 from '../images/slide3.jpg';
-import slide4 from '../images/slide4.jpg';
-import slide5 from '../images/slide5.jpg';
-import slide6 from '../images/slide6.jpg';
-import slide7 from '../images/slide7.jpg';
+import { HomeBannerAPI } from '../API/localAPI';
 
 const HomeBanner = () => {
     let settings = {
@@ -27,41 +21,13 @@ const HomeBanner = () => {
     return (
         <>
             <CarouselImgs { ...settings }>
-                <Wrap>
-                    <div>
-                        <img src={slide1} alt="slide/imgs" />
-                    </div>
-                </Wrap>
-                <Wrap>
-                    <div>
-                        <img src={slide2} alt="slide/imgs" />
-                    </div>
-                </Wrap>
-                <Wrap>
-                    <div>
-                        <img src={slide3} alt="slide/imgs" />
-                    </div>
-                </Wrap>
-                <Wrap>
-                    <div>
-                        <img src={slide4} alt="slide/imgs" />
-                    </div>
-                </Wrap>
-                <Wrap>
-                    <div>
-                        <img src={slide5} alt="slide/imgs" />
-                    </div>
-                </Wrap>
-                <Wrap>
-                    <div>
-                        <img src={slide6} alt="slide/imgs" />
-                    </div>
-                </Wrap>
-                <Wrap>
-                    <div>
-                        <img src={slide7} alt="slide/imgs" />
-                    </div>
-                </Wrap>
+                {HomeBannerAPI?.map((val, i) => (
+                    <Wrap key={i}>
+                        <div>
+                            <img src={val.slideSrc} alt="slide/imgs" />
+                        </div>
+                    </Wrap>
+                ))}
             </CarouselImgs>
         </>
     );
@@ -134,7 +100,7 @@ const Wrap = styled.div`
                 object-fit: fill;
             }
         }
-        
+
         &:hover {
             padding: 0;
             border: 4px solid rgba(249, 249, 249, 0.8);
